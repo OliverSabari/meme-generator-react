@@ -1,0 +1,20 @@
+  
+  Header
+       1) Title
+  
+  Body 
+        1) Description with any text
+
+ Meme Generator Area
+        1)Form
+             i) Header name and footer name and button
+             ii)To store the values using useState
+             iii)when user clicks on button getting random image
+
+        2)For random image
+             iv)for random image running Math.random function and getting some numbers between 0 to 100 as api contains only 100 images
+             
+        3)API 
+             v) At the loading time, fetching all the meme data and storing it in seperate state 
+             vi)using random number getting random images url from api data 
+             vii) passing the image url to img src
