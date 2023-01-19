@@ -6,12 +6,7 @@ import * as Yup from 'yup'
 
 const MemeGenerator = () => {
 
-
-    const [formData, setFormData] = useState({
-        header: "Mom : I deleted all your games in your PC",
-        footer: "*she actually deleted the desktop icons not the games*",
-        imgurl: "https://i.imgflip.com/4acd7j.png"
-    })
+    const [url , setURL] = useState("https://i.imgflip.com/4acd7j.png")
 
     const [memeData, setMemeData] = useState([])
 
@@ -26,42 +21,6 @@ const MemeGenerator = () => {
     }, [])
 
 
-    //getting header and footer text from user and setting it to state
-
-    function handleChange(event) {
-
-        const { name, value } = event.target
-
-        return (
-
-            setFormData(prevData => {
-                return {
-                    ...prevData,
-                    [name]: value
-                }
-            })
-
-        )
-    }
-
-
-
-    //Getting random number while user clicks on button and getting the url and setting it to state
-
-    function handleClick() {
-
-        const randomno = Math.floor(Math.random() * memeData.length)
-
-        const randomurl = memeData[randomno].url
-
-        setFormData(prevState => {
-            return {
-                ...prevState,
-                imgurl: randomurl
-            }
-        })
-    }
-
     //Using formik to handle the forms
 
     const formik = useFormik({
@@ -71,9 +30,20 @@ const MemeGenerator = () => {
             imgurl: "https://i.imgflip.com/4acd7j.png"
         },
         validationSchema: Yup.object({
-            header : Yup.string().required("Header name is required").max(30, "Header name must be less than 30 characters"),
-            footer : Yup.string().required("Header name is required").max(30, "Header name must be less than 30 characters")
-        })
+            header : Yup.string().required("Header name is required").max(100, "Header name must be less than 100 characters"),
+            footer : Yup.string().required("footer name is required").max(100, "footer name must be less than 100 characters")
+        }),
+        onSubmit : (values) => {
+
+    //Getting random number while user clicks on button and getting the url and setting it to state
+
+            const randomno = Math.floor(Math.random() * memeData.length)
+
+            const randomurl = memeData[randomno].url
+            
+            setURL(randomurl)
+
+        }
     })
 
     return (
@@ -86,37 +56,45 @@ const MemeGenerator = () => {
                     <input type="text"
                         placeholder="Enter the header text"
                         name="header"
-                        value={formData.header}
-                        onChange={handleChange}
+                        value={formik.values.header}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                     />
+
+                   
 
                     <input type="text"
                         placeholder="Enter the Footer text"
                         name="footer"
-                        value={formData.footer}
-                        onChange={handleChange}
+                        value={formik.values.footer}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                     />
-
+         
                     <Button
                         className="meme-button"
                        
-                        onClick={handleClick}
+                        onClick={formik.handleSubmit}
                     >
                         Get Your Meme Image
                     </Button>
 
                 </div>
 
+                {formik.touched.header && formik.errors.header ? <p className="error-div"> {formik.errors.header}</p> : null }
+
+                {formik.touched.footer && formik.errors.footer ? <p className="error-div"> {formik.errors.footer}</p> : null }
+
                 <div className="img-div">
 
-                    <p className="meme-text top"> {formData.header} </p>
+                    <p className="meme-text top"> {formik.values.header} </p>
 
-                    <img src={formData.imgurl}
+                    <img src={url}
                         alt="memeimage"
                         className="meme-image"
                     />
 
-                    <p className="meme-text bottom"> {formData.footer} </p>
+                    <p className="meme-text bottom"> {formik.values.footer} </p>
 
                 </div>
 

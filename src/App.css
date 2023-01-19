@@ -48,7 +48,7 @@ body {
 .header-para {
   text-transform: uppercase;
   color: black;
-
+  padding: 30px;
   text-align: center;
   font-size: 46px;
   font-family: "Poppins", sans-serif;
@@ -91,6 +91,7 @@ input[type="text"] {
   display: flex;
   justify-content: center;
   margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .meme-text {
@@ -130,6 +131,18 @@ input[type="text"] {
   max-width: 100%;
   border-radius: 3px;
   height: 100%;
+ 
+}
+
+/* -----------------------Error Div--------------------------------- */
+
+.error-div{
+  background-color: black;
+  color: red;
+  text-align: center;
+  width: 300px;
+  margin:20px auto;
+  border-radius: 5px;
 }
 
 @media only screen and (max-width: 600px) {
